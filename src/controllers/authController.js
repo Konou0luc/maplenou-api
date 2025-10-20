@@ -5,7 +5,7 @@ import Utilisateur from "../models/utilisateur.js";
 // inscription 
 export const register = async (req, res) => {
     try {
-        const { nom, prenom, email, mot_de_passe, telephone, photo_profil } = req.body;
+        const { nom, prenom, email, mot_de_passe, telephone, photo_profil, role, institut, parcours } = req.body;
 
         // Vérif email unique
         const exist = await Utilisateur.findOne({ email });
@@ -21,6 +21,9 @@ export const register = async (req, res) => {
             telephone,
             photo_profil,
             mot_de_passe_hash: hashedPassword,
+            role: role || 'client',
+            institut: institut || null,
+            parcours: parcours || null,
         });
 
         await user.save();
