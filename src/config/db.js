@@ -5,23 +5,16 @@ let retriesLeft = 5;
 const connectDB = async () => {
     const uri = process.env.MONGO_URI;
     if (!uri) {
-        console.error("MONGO_URI manquant dans .env");
-        process.exit(1);
+        console.warn("MONGO_URI manquant dans .env - Mode développement sans DB");
+        return;
     }
 
     try {
         await mongoose.connect(uri);
         console.log("MongoDB connecté");
     } catch (error) {
-        console.error("Erreur MongoDB:", error.message);
-        if (retriesLeft > 0) {
-            const delayMs = 3000;
-            console.log(`Nouvelle tentative de connexion dans ${delayMs / 1000}s (retries restants: ${retriesLeft})`);
-            retriesLeft -= 1;
-            setTimeout(connectDB, delayMs);
-        } else {
-            process.exit(1);
-        }
+        console.warn("Erreur MongoDB:", error.message, "- Mode développement sans DB");
+        // Ne pas arrêter le serveur en cas d'erreur MongoDB
     }
 };
 
