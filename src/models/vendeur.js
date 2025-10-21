@@ -5,7 +5,9 @@ const vendeurSchema = new mongoose.Schema({
     nom_restaurant: { type: String, required: true },
     description: { type: String, default: "" },
     adresse: { type: String, default: "" },
-    horaires_ouverture: { type: String, default: "" }
+    horaires_ouverture: { type: String, default: "" },
+    telephone: { type: String, default: "" },
+    email_contact: { type: String, default: "" }
 }, { timestamps: true });
 
 export default mongoose.model("Vendeur", vendeurSchema);

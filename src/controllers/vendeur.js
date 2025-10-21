@@ -8,7 +8,14 @@ export const createOrUpdateMyVendeur = async (req, res) => {
             return res.status(403).json({ message: "Accès interdit. Seuls les vendeurs peuvent créer un profil vendeur." });
         }
 
-        const { nom_restaurant, description, adresse, horaires_ouverture } = req.body;
+        const { 
+            nom_restaurant, 
+            description, 
+            adresse, 
+            horaires_ouverture, 
+            telephone, 
+            email_contact 
+        } = req.body;
 
         let vendeur = await Vendeur.findOne({ utilisateur_id: req.user.id });
 
@@ -18,6 +25,8 @@ export const createOrUpdateMyVendeur = async (req, res) => {
             vendeur.description = description || vendeur.description;
             vendeur.adresse = adresse || vendeur.adresse;
             vendeur.horaires_ouverture = horaires_ouverture || vendeur.horaires_ouverture;
+            vendeur.telephone = telephone || vendeur.telephone;
+            vendeur.email_contact = email_contact || vendeur.email_contact;
             await vendeur.save();
 
             return res.json({ message: "Profil vendeur mis à jour ✅", vendeur });
@@ -29,7 +38,9 @@ export const createOrUpdateMyVendeur = async (req, res) => {
             nom_restaurant,
             description,
             adresse,
-            horaires_ouverture
+            horaires_ouverture,
+            telephone,
+            email_contact
         });
 
         await vendeur.save();
